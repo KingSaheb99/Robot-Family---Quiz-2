@@ -22,13 +22,9 @@ def setup():
 def draw():
     global numRobots, robots;
     background(255, 255, 255);
-    
-    for i in range(numRobots):
-        robots[i].display();
         
-    progenitorBot = oldBot(1, "c", 1, "The Old One", 1, 1);
-    progenitorBot.start(width/2, height/8 * progenitorBot.genNum);
-    progenitorBot.display();
+    progenitorBot = oldBot(1, "a", 0, "The Old One", 1, 1);
+    progenitorBot.run();
         
 def mousePressed():
     global numRobots, currentRobot;
@@ -50,14 +46,14 @@ class Robot(object):
         self.x = posX;
         self.y = posY;
         
-    def display(self):
-        fill(0, 0, 255);
+    def strokeGen(self):
         if (self.genNum % 2 == 0):
             strokeWeight(0);
         else:
             strokeWeight(5);
         stroke(0, 0, 0);
         
+    def shapeGen(self):
         rectMode(CENTER);
         ellipseMode(CENTER);
         
@@ -68,30 +64,31 @@ class Robot(object):
         elif(self.shapeType == "c"):
             ellipse(self.x, self.y, shapeSize, shapeSize);
             #triangle(self.x, self.y, (self.x) + 10, (self.y) + 10, (self.x) - 10, (self.y) - 10);
+            
+    def colourGen(self):
+        if(self.colourType == 0):
+            fill(127);
+        elif(self.colourType == 1):
+            fill(255, 0, 0);
+        elif(self.colourType == 2):
+            fill(0, 0, 255);
+        elif(self.colourType == 3):
+            fill(0, 255, 0);
+        elif(self.colourType == 4):
+            fill(195, 3, 255);
+        elif(self.colourType == 5):
+            fill(254, 255, 18);
+            
+    def run(self):
+        self.start(width/4 * self.genNum, height/4 * self.genNum);
+        self.strokeGen();
+        self.shapeGen();
+        self.colourGen();
         
 class oldBot(Robot):
     def __init__(self, genNum, shapeType, colourType, botName, x, y):
         Robot.__init__(self, genNum, shapeType, colourType, botName, x, y);
         
-    def display(self):
-        fill(127);
-        if (self.genNum % 2 == 0):
-            strokeWeight(0);
-        else:
-            strokeWeight(3);
-        stroke(0, 0, 0);
-        
-        rectMode(CENTER);
-        ellipseMode(CENTER);
-        
-        if(self.shapeType == "a"):
-            ellipse(self.x, self.y, shapeSize, shapeSize)
-        elif(self.shapeType == "b"):
-            rect(self.x, self.y, shapeSize, shapeSize);
-        elif(self.shapeType == "c"):
-            ellipse(self.x, self.y, shapeSize, shapeSize);
-            #triangle(self.x, self.y, (self.x) + 10, (self.y) + 10, (self.x) - 10, (self.y) - 10);
-        
-class Child(Robot):
+class childA(oldBot):
     def __init__(self, genNum, shapeType, colourType, botName, x, y):
         Robot.__init__(self, genNum, shapeType, colourType, botName, x, y);
