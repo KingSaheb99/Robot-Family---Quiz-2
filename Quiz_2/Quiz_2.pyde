@@ -6,32 +6,16 @@
     # https://www.geeksforgeeks.org/types-of-inheritance-python/?ref=lbp
     # https://py.processing.org/reference/
 
-numRobots = 1;
-robots = [0] * numRobots;
-currentRobot = 0;
-
 shapeSize = 25;
 
 def setup():
     size(1980, 1240);
-    smooth();
-    global numRobots, robots;
-    for i in range(numRobots):
-        robots[i] = Robot(1, 1, 1, True, width/2, height/4);
-    
-def draw():
-    global numRobots, robots;
     background(255, 255, 255);
+    smooth();
         
+def draw():        
     progenitorBot = oldBot(1, "a", 0, "The Old One", 1, 1);
     progenitorBot.run();
-        
-def mousePressed():
-    global numRobots, currentRobot;
-    robots[currentRobot].start(mouseX, mouseY);
-    currentRobot += 1;
-    if(currentRobot >= numRobots):
-        currentRobot = 0;
         
 class Robot(object): 
     def __init__(self, genNum, shapeType, colourType, botName, x, y):
